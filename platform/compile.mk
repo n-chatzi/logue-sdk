@@ -12,12 +12,16 @@ else
     detected_OS := $(shell uname -s)
 endif
 
-PLATFORMDIR = .
-# PROJECTDIR = .
-TOOLSDIR = $(PLATFORMDIR)/../tools
-EXTDIR = $(PLATFORMDIR)/ext
+PROJECT_DIR = .
+SDK_DIR ?= .
 
-CMSISDIR = $(EXTDIR)/CMSIS/CMSIS
+PLATFORM_DIR = $(SDK_DIR)/platform
+TOOLS_DIR = $(SDK_DIR)/tools
+
+TPL_DIR = $(PLATFORM_DIR)/tpl
+EXT_DIR = $(PLATFORM_DIR)/ext
+
+CMSIS_DIR = $(EXT_DIR)/CMSIS/CMSIS
 
 # #############################################################################
 # configure archive utility
@@ -28,7 +32,7 @@ ZIP_ARGS = -r -m -q
 
 ifeq ($(OS),Windows_NT)
 ifneq ($(MSYSTEM), MSYS)
-  ZIP = $(TOOLSDIR)/zip/bin/zip
+  ZIP = $(TOOLS_DIR)/zip/bin/zip
 endif
 endif
 
@@ -39,66 +43,64 @@ endif
 MCU = cortex-m4
 
 GCC_TARGET = arm-none-eabi-
-GCC_BIN_PATH = $(TOOLSDIR)/gcc/gcc-arm-none-eabi-5_4-2016q3/bin
+GCC_BIN_PATH = $(TOOLS_DIR)/gcc/gcc-arm-none-eabi-5_4-2016q3/bin
 
-CC   = $(GCC_BIN_PATH)/$(GCC_TARGET)gcc
-CXXC = $(GCC_BIN_PATH)/$(GCC_TARGET)g++
-LD   = $(GCC_BIN_PATH)/$(GCC_TARGET)gcc
-#LD  = $(GCC_BIN_PATH)/$(GCC_TARGET)g++
-CP   = $(GCC_BIN_PATH)/$(GCC_TARGET)objcopy
-AS   = $(GCC_BIN_PATH)/$(GCC_TARGET)gcc -x assembler-with-cpp
-AR   = $(GCC_BIN_PATH)/$(GCC_TARGET)ar
-OD   = $(GCC_BIN_PATH)/$(GCC_TARGET)objdump
-SZ   = $(GCC_BIN_PATH)/$(GCC_TARGET)size
+CROSS_COMPILE = $(GCC_BIN_PATH)/$(GCC_TARGET)
+
+CC   = $(CROSS_COMPILE)gcc
+CXXC = $(CROSS_COMPILE)g++
+LD   = $(CROSS_COMPILE)gcc
+#LD  = $(CROSS_COMPILE)g++
+CP   = $(CROSS_COMPILE)objcopy
+AS   = $(CROSS_COMPILE)gcc -x assembler-with-cpp
+AR   = $(CROSS_COMPILE)ar
+OD   = $(CROSS_COMPILE)objdump
+SZ   = $(CROSS_COMPILE)size
 
 HEX  = $(CP) -O ihex
 BIN  = $(CP) -O binary
+
+RM = rm -rf
 
 #########################################
 # Architecture specifc section
 
 ifeq ($(TYPE),modfx delfx revfx)
-DADEFS = -DSTM32F446xE
-LDDIR = $(PLATFORMDIR)/ld/446
-SYMBOLS = main_api.syms
+DARCH = -DSTM32F446xE
+LD_DIR = $(PLATFORM_DIR)/ld/446
+SYMBOLS = $(LD_DIR)/main_api.syms
 else
-DADEFS = -DSTM32F401xC
-LDDIR = $(PLATFORMDIR)/ld/401
-SYMBOLS = osc_api.syms
+DARCH = -DSTM32F401xC
+LD_DIR = $(PLATFORM_DIR)/ld/401
+SYMBOLS = $(LD_DIR)/osc_api.syms
 endif
 
 ifeq ($(TYPE),modfx)
-LDSCRIPT = $(LDDIR)/usermodfx.ld
-UNIT = _umod_unit.c
+LDSCRIPT = $(LD_DIR)/usermodfx.ld
+UNIT = $(TPL_DIR)/_umod_unit.c
 endif 
 
 ifeq ($(TYPE),delfx)
-LDSCRIPT = $(LDDIR)/userdelfx.ld
-UNIT = _udel_unit.c
+LDSCRIPT = $(LD_DIR)/userdelfx.ld
+UNIT = $(TPL_DIR)/_udel_unit.c
 endif 
 
 ifeq ($(TYPE),revfx)
-LDSCRIPT = $(LDDIR)/userrev.ld
-UNIT = _urev_unit.c
+LDSCRIPT = $(LD_DIR)/userrev.ld
+UNIT = $(TPL_DIR)/_urev_unit.c
 endif 
 
 ifeq ($(TYPE),osc)
-LDSCRIPT = $(LDDIR)/userosc.ld
-UNIT = _uosc_unit.c
+LDSCRIPT = $(LD_DIR)/userosc.ld
+UNIT = $(TPL_DIR)/_uosc_unit.c
 endif 
 
-RULESPATH = $(LDDIR)
+RULESPATH = $(LD_DIR)
+
+DADEFS = $(DARCH) -DCORTEX_USE_FPU=TRUE -DARM_MATH_CM4
+DDEFS = $(DARCH) -DCORTEX_USE_FPU=TRUE -DARM_MATH_CM4 -D__FPU_PRESENT
 
 DLIBS = -lm
-
-DADEFS += \
-	-DCORTEX_USE_FPU=TRUE \
-	-DARM_MATH_CM4
-
-DDEFS += \
-	-DCORTEX_USE_FPU=TRUE \
-	-DARM_MATH_CM4 \
-	-D__FPU_PRESENT
 
 #########################################
 # Options
@@ -106,7 +108,7 @@ DDEFS += \
 COPT = -std=c11 -mstructure-size-boundary=8
 CXXOPT = -std=c++11 -fno-rtti -fno-exceptions -fno-non-call-exceptions
 
-LDOPT = -Xlinker --just-symbols=$(LDDIR)/$(SYMBOL)
+LDOPT = -Xlinker --just-symbols=$(SYMBOLS)
 
 CWARN = -W -Wall -Wextra
 CXXWARN =
@@ -119,25 +121,25 @@ OPT += $(FPU_OPTS)
 
 TOPT = -mthumb -mno-thumb-interwork -DTHUMB_NO_INTERWORKING -DTHUMB_PRESENT
 
-
 # #############################################################################
 # set targets and directories
 # #############################################################################
-UNIT_EXTENSION ?= .prlgunit
 
-PKGDIR = $(PROJECT)
-PKGARCH = $(PROJECT)$(UNIT_EXTENSION)
+PKG_DIR = $(OUTPUT_DIR)
+PKG_PRLG = $(PROJECT).prlgunit
+PKG_MNLG = $(PROJECT).mnlgxdunit
 MANIFEST = manifest.json
 PAYLOAD = payload.bin
-BUILDDIR = $(PROJECTDIR)/build
-OBJDIR = $(BUILDDIR)/obj
-LSTDIR = $(BUILDDIR)/lst
+
+BUILD_DIR = $(PROJECT_DIR)/build
+OBJ_DIR = $(BUILD_DIR)/obj
+LST_DIR = $(BUILD_DIR)/lst
 
 ASMSRC = $(UASMSRC)
 
 ASMXSRC = $(UASMXSRC)
 
-CSRC = $(PLATFORMDIR)/tpl/$(UNIT) $(UCSRC)
+CSRC = $(UNIT) $(UCSRC)
 
 CXXSRC = $(UCXXSRC)
 
@@ -146,27 +148,27 @@ vpath %.S $(sort $(dir $(ASMXSRC)))
 vpath %.c $(sort $(dir $(CSRC)))
 vpath %.cpp $(sort $(dir $(CXXSRC)))
 
-ASMOBJS := $(addprefix $(OBJDIR)/, $(notdir $(ASMSRC:.s=.o)))
-ASMXOBJS := $(addprefix $(OBJDIR)/, $(notdir $(ASMXSRC:.S=.o)))
-COBJS := $(addprefix $(OBJDIR)/, $(notdir $(CSRC:.c=.o)))
-CXXOBJS := $(addprefix $(OBJDIR)/, $(notdir $(CXXSRC:.cpp=.o)))
+ASMOBJS := $(addprefix $(OBJ_DIR)/, $(notdir $(ASMSRC:.s=.o)))
+ASMXOBJS := $(addprefix $(OBJ_DIR)/, $(notdir $(ASMXSRC:.S=.o)))
+COBJS := $(addprefix $(OBJ_DIR)/, $(notdir $(CSRC:.c=.o)))
+CXXOBJS := $(addprefix $(OBJ_DIR)/, $(notdir $(CXXSRC:.cpp=.o)))
 
 OBJS := $(ASMXOBJS) $(ASMOBJS) $(COBJS) $(CXXOBJS)
 
-DINCDIR = $(PLATFORMDIR)/inc 		\
-	      $(PLATFORMDIR)/inc/api 	\
-	      $(PLATFORMDIR)/inc/dsp 	\
-	      $(PLATFORMDIR)/inc/utils 	\
-          $(CMSISDIR)/Include
+DINC_DIR = $(PLATFORM_DIR)/inc 			\
+	       $(PLATFORM_DIR)/inc/api 		\
+	       $(PLATFORM_DIR)/inc/dsp 		\
+	       $(PLATFORM_DIR)/inc/utils 	\
+           $(CMSIS_DIR)/Include
 
-INCDIR := $(patsubst %,-I%,$(DINCDIR) $(UINCDIR))
+INC_DIR := $(patsubst %,-I%,$(DINC_DIR) $(UINC_DIR))
 
 DEFS := $(DDEFS) $(UDEFS)
 ADEFS := $(DADEFS) $(UADEFS)
 
 LIBS := $(DLIBS) $(ULIBS)
 
-LIBDIR := $(patsubst %,-I%,$(DLIBDIR) $(ULIBDIR))
+LIB_DIR := $(patsubst %,-I%,$(DLIB_DIR) $(ULIB_DIR))
 
 
 # #############################################################################
@@ -175,17 +177,17 @@ LIBDIR := $(patsubst %,-I%,$(DLIBDIR) $(ULIBDIR))
 
 MCFLAGS   := -mcpu=$(MCU)
 ODFLAGS	  = -x --syms
-ASFLAGS   = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LSTDIR)/$(notdir $(<:.s=.lst)) $(ADEFS)
-ASXFLAGS  = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LSTDIR)/$(notdir $(<:.S=.lst)) $(ADEFS)
-CFLAGS    = $(MCFLAGS) $(TOPT) $(OPT) $(COPT) $(CWARN) -Wa,-alms=$(LSTDIR)/$(notdir $(<:.c=.lst)) $(DEFS)
-CXXFLAGS  = $(MCFLAGS) $(TOPT) $(OPT) $(CXXOPT) $(CXXWARN) -Wa,-alms=$(LSTDIR)/$(notdir $(<:.cpp=.lst)) $(DEFS)
-LDFLAGS   = $(MCFLAGS) $(TOPT) $(OPT) -nostartfiles $(LIBDIR) -Wl,-Map=$(BUILDDIR)/$(PROJECT).map,--cref,--no-warn-mismatch,--library-path=$(RULESPATH),--script=$(LDSCRIPT) $(LDOPT)
+ASFLAGS   = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.s=.lst)) $(ADEFS)
+ASXFLAGS  = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.S=.lst)) $(ADEFS)
+CFLAGS    = $(MCFLAGS) $(TOPT) $(OPT) $(COPT) $(CWARN) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.c=.lst)) $(DEFS)
+CXXFLAGS  = $(MCFLAGS) $(TOPT) $(OPT) $(CXXOPT) $(CXXWARN) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.cpp=.lst)) $(DEFS)
+LDFLAGS   = $(MCFLAGS) $(TOPT) $(OPT) -nostartfiles $(LIB_DIR) -Wl,-Map=$(BUILD_DIR)/$(PROJECT).map,--cref,--no-warn-mismatch,--library-path=$(RULESPATH),--script=$(LDSCRIPT) $(LDOPT)
 
-OUTFILES := $(BUILDDIR)/$(PROJECT).elf \
-	        $(BUILDDIR)/$(PROJECT).hex \
-	        $(BUILDDIR)/$(PROJECT).bin \
-	        $(BUILDDIR)/$(PROJECT).dmp \
-	        $(BUILDDIR)/$(PROJECT).list
+OUTFILES := $(BUILD_DIR)/$(PROJECT).elf \
+	        $(BUILD_DIR)/$(PROJECT).hex \
+	        $(BUILD_DIR)/$(PROJECT).bin \
+	        $(BUILD_DIR)/$(PROJECT).dmp \
+	        $(BUILD_DIR)/$(PROJECT).list
 
 ###############################################################################
 # targets
@@ -195,39 +197,39 @@ all: PRE_ALL $(OBJS) $(OUTFILES) POST_ALL
 
 PRE_ALL:
 
-POST_ALL: package
+POST_ALL: package_prlg package_mnlg
 
-$(OBJS): | $(BUILDDIR) $(OBJDIR) $(LSTDIR)
+$(OBJS): | $(BUILD_DIR) $(OBJ_DIR) $(LST_DIR)
 
-$(BUILDDIR):
+$(BUILD_DIR):
 	@echo Compiler Options
-	@echo $(CC) -c $(CFLAGS) -I. $(INCDIR)
+	@echo $(CC) -c $(CFLAGS) -I. $(INC_DIR)
 	@echo
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILD_DIR)
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-$(LSTDIR):
-	@mkdir -p $(LSTDIR)
+$(LST_DIR):
+	@mkdir -p $(LST_DIR)
 
-$(ASMOBJS) : $(OBJDIR)/%.o : %.s Makefile
+$(ASMOBJS) : $(OBJ_DIR)/%.o : %.s Makefile
 	@echo Assembling $(<F)
-	@$(AS) -c $(ASFLAGS) -I. $(INCDIR) $< -o $@
+	@$(AS) -c $(ASFLAGS) -I. $(INC_DIR) $< -o $@
 
-$(ASMXOBJS) : $(OBJDIR)/%.o : %.S Makefile
+$(ASMXOBJS) : $(OBJ_DIR)/%.o : %.S Makefile
 	@echo Assembling $(<F)
-	@$(CC) -c $(ASXFLAGS) -I. $(INCDIR) $< -o $@
+	@$(CC) -c $(ASXFLAGS) -I. $(INC_DIR) $< -o $@
 
-$(COBJS) : $(OBJDIR)/%.o : %.c Makefile
+$(COBJS) : $(OBJ_DIR)/%.o : %.c Makefile
 	@echo Compiling $(<F)
-	@$(CC) -c $(CFLAGS) -I. $(INCDIR) $< -o $@
+	@$(CC) -c $(CFLAGS) -I. $(INC_DIR) $< -o $@
 
-$(CXXOBJS) : $(OBJDIR)/%.o : %.cpp Makefile
+$(CXXOBJS) : $(OBJ_DIR)/%.o : %.cpp Makefile
 	@echo Compiling $(<F)
-	@$(CXXC) -c $(CXXFLAGS) -I. $(INCDIR) $< -o $@
+	@$(CXXC) -c $(CXXFLAGS) -I. $(INC_DIR) $< -o $@
 
-$(BUILDDIR)/%.elf: $(OBJS) $(LDSCRIPT)
+$(BUILD_DIR)/%.elf: $(OBJS) $(LDSCRIPT)
 	@echo Linking $@
 	@$(LD) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 
@@ -252,16 +254,32 @@ $(BUILDDIR)/%.elf: $(OBJS) $(LDSCRIPT)
 
 clean:
 	@echo Cleaning
-	-rm -fR .dep $(BUILDDIR) $(PKGARCH)
+	$(RM) .dep $(BUILD_DIR) 
+	$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
+	$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
 	@echo
 	@echo Done
 
-package:
-	@echo Packaging to ./$(PKGARCH)
-	@mkdir -p $(PKGDIR)
-	@cp -a $(MANIFEST) $(PKGDIR)/
-	@cp -a $(BUILDDIR)/$(PROJECT).bin $(PKGDIR)/$(PAYLOAD)
-	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PKGDIR)
-	@mv $(PROJECT).zip $(PKGARCH)
-	@echo
+package_prlg:
+	@echo Packaging to ./$(PKG_PRLG)
+	@mkdir -p $(PKG_DIR)
+	@cp -a $(MANIFEST) $(PKG_DIR)/
+	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_DIR)/$(PAYLOAD)
+	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PKG_DIR)
+	@mv $(PROJECT).zip $(PKG_PRLG)
+	@mkdir -p $(OUTPUT_DIR)/
+	@mv $(PKG_PRLG) $(OUTPUT_DIR)/
 	@echo Done
+	@echo
+
+package_mnlg:
+	@echo Packaging to ./$(PKG_MNLG)
+	@mkdir -p $(PKG_DIR)
+	@cp -a $(MANIFEST) $(PKG_DIR)/
+	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_DIR)/$(PAYLOAD)
+	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PKG_DIR)
+	@mv $(PROJECT).zip $(PKG_MNLG)
+	@mkdir -p $(OUTPUT_DIR)/
+	@mv $(PKG_MNLG) $(OUTPUT_DIR)/
+	@echo Done
+	@echo
