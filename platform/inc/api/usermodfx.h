@@ -53,6 +53,11 @@ extern "C" {
 
 #define __sdram __attribute__((section(".sdram")))
 
+  typedef enum {
+    k_modfx_param_speed = 0,
+    k_modfx_param_depth,
+  } user_modfx_param_id_t;
+
   typedef void (*UserModFXFuncInit)(uint32_t platform, uint32_t api);
   typedef void (*UserModFXFuncProcess)(const float *main_xn, float *main_yn,
                                        const float *sub_xn,  float *sub_yn,

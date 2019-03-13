@@ -53,6 +53,11 @@ extern "C" {
 
 #define __sdram __attribute__((section(".sdram")))
   
+  typedef enum {
+    k_revfx_param_time = 0,
+    k_revfx_param_depth,
+  } user_revfx_param_id_t;
+
   typedef void (*UserRevFXFuncInit)(uint32_t platform, uint32_t api);
   typedef void (*UserRevFXFuncProcess)(float *xn, uint32_t frames);
   typedef void (*UserRevFXSuspend)(void);

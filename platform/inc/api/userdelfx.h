@@ -53,6 +53,11 @@ extern "C" {
 
 #define __sdram __attribute__((section(".sdram")))
 
+  typedef enum {
+    k_delfx_param_time = 0,
+    k_delfx_param_depth,
+  } user_delfx_param_id_t;
+
   typedef void (*UserDelFXFuncInit)(uint32_t platform, uint32_t api);
   typedef void (*UserDelFXFuncProcess)(float *xn, uint32_t frames);
   typedef void (*UserDelFXSuspend)(void);
