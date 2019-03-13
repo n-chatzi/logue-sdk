@@ -75,25 +75,8 @@ LD_DIR = $(PLATFORM_DIR)/ld/401
 SYMBOLS = $(LD_DIR)/osc_api.syms
 endif
 
-ifeq ($(TYPE),modfx)
-LDSCRIPT = $(LD_DIR)/usermodfx.ld
-UNIT = $(TPL_DIR)/_umod_unit.c
-endif 
-
-ifeq ($(TYPE),delfx)
-LDSCRIPT = $(LD_DIR)/userdelfx.ld
-UNIT = $(TPL_DIR)/_udel_unit.c
-endif 
-
-ifeq ($(TYPE),revfx)
-LDSCRIPT = $(LD_DIR)/userrev.ld
-UNIT = $(TPL_DIR)/_urev_unit.c
-endif 
-
-ifeq ($(TYPE),osc)
-LDSCRIPT = $(LD_DIR)/userosc.ld
-UNIT = $(TPL_DIR)/_uosc_unit.c
-endif 
+LDSCRIPT = $(LD_DIR)/user$(TYPE).ld
+UNIT = $(TPL_DIR)/_u$(TYPE)_unit.c
 
 RULESPATH = $(LD_DIR)
 
