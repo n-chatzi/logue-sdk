@@ -126,6 +126,8 @@ TOPT = -mthumb -mno-thumb-interwork -DTHUMB_NO_INTERWORKING -DTHUMB_PRESENT
 # #############################################################################
 
 PKG_DIR = $(OUTPUT_DIR)
+PKG_TEMP_DIR = $(PKG_DIR)/temp
+
 PKG_PRLG = $(PROJECT).prlgunit
 PKG_MNLG = $(PROJECT).mnlgxdunit
 MANIFEST = manifest.json
@@ -254,32 +256,32 @@ $(BUILD_DIR)/%.elf: $(OBJS) $(LDSCRIPT)
 
 clean:
 	@echo Cleaning
-	$(RM) .dep $(BUILD_DIR) 
-	$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
-	$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
-	@echo
+	@$(RM) .dep $(BUILD_DIR) 
+	@$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
+	@$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
 	@echo Done
+	@echo
 
 package_prlg:
-	@echo Packaging to ./$(PKG_PRLG)
+	@echo Packaging to $(OUTPUT_DIR)/$(PKG_PRLG)
+	@mkdir -p $(PKG_TEMP_DIR)
+	@cp -a $(MANIFEST) $(PKG_TEMP_DIR)
+	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_TEMP_DIR)/$(PAYLOAD)
+	@$(ZIP) $(ZIP_ARGS) $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_TEMP_DIR)
 	@mkdir -p $(PKG_DIR)
-	@cp -a $(MANIFEST) $(PKG_DIR)/
-	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_DIR)/$(PAYLOAD)
-	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PKG_DIR)
-	@mv $(PROJECT).zip $(PKG_PRLG)
-	@mkdir -p $(OUTPUT_DIR)/
-	@mv $(PKG_PRLG) $(OUTPUT_DIR)/
+	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_DIR)/$(PKG_PRLG)
+	@$(RM) $(PKG_TEMP_DIR)
 	@echo Done
 	@echo
 
 package_mnlg:
-	@echo Packaging to ./$(PKG_MNLG)
+	@echo Packaging to $(OUTPUT_DIR)/$(PKG_MNLG)
+	@mkdir -p $(PKG_TEMP_DIR)
+	@cp -a $(MANIFEST) $(PKG_TEMP_DIR)
+	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_TEMP_DIR)/$(PAYLOAD)
+	@$(ZIP) $(ZIP_ARGS) $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_TEMP_DIR)
 	@mkdir -p $(PKG_DIR)
-	@cp -a $(MANIFEST) $(PKG_DIR)/
-	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_DIR)/$(PAYLOAD)
-	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PKG_DIR)
-	@mv $(PROJECT).zip $(PKG_MNLG)
-	@mkdir -p $(OUTPUT_DIR)/
-	@mv $(PKG_MNLG) $(OUTPUT_DIR)/
+	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_DIR)/$(PKG_MNLG)
+	@$(RM) $(PKG_TEMP_DIR)
 	@echo Done
 	@echo
