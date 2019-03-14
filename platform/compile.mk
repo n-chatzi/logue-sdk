@@ -108,8 +108,7 @@ TOPT = -mthumb -mno-thumb-interwork -DTHUMB_NO_INTERWORKING -DTHUMB_PRESENT
 # set targets and directories
 # #############################################################################
 
-PKG_DIR = $(OUTPUT_DIR)
-PKG_TEMP_DIR = $(PKG_DIR)/temp
+PKG_TEMP_DIR = $(OUTPUT_DIR)/temp
 
 PKG_PRLG = $(PROJECT).prlgunit
 PKG_MNLG = $(PROJECT).mnlgxdunit
@@ -238,33 +237,35 @@ $(BUILD_DIR)/%.elf: $(OBJS) $(LDSCRIPT)
 	@$(OD) -S $< > $@
 
 clean:
-	@echo Cleaning
-	@$(RM) .dep $(BUILD_DIR) 
-	@$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
-	@$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
+	@echo Cleaning $(PROJECT)
+	$(RM) .dep $(BUILD_DIR) 
+	$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
+	$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
 	@echo Done
 	@echo
 
 package_prlg:
-	@echo Packaging to $(OUTPUT_DIR)/$(PKG_PRLG)
+	@echo Packaging: $(PKG_PRLG)
+	@echo In: $(OUTPUT_DIR)
 	@mkdir -p $(PKG_TEMP_DIR)
 	@cp -a $(MANIFEST) $(PKG_TEMP_DIR)
 	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_TEMP_DIR)/$(PAYLOAD)
 	@$(ZIP) $(ZIP_ARGS) $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_TEMP_DIR)
-	@mkdir -p $(PKG_DIR)
-	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_DIR)/$(PKG_PRLG)
+	@mkdir -p $(OUTPUT_DIR)
+	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(OUTPUT_DIR)/$(PKG_PRLG)
 	@$(RM) $(PKG_TEMP_DIR)
 	@echo Done
 	@echo
 
 package_mnlg:
-	@echo Packaging to $(OUTPUT_DIR)/$(PKG_MNLG)
+	@echo Packaging: $(PKG_PRLG)
+	@echo In: $(OUTPUT_DIR)
 	@mkdir -p $(PKG_TEMP_DIR)
 	@cp -a $(MANIFEST) $(PKG_TEMP_DIR)
 	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PKG_TEMP_DIR)/$(PAYLOAD)
 	@$(ZIP) $(ZIP_ARGS) $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_TEMP_DIR)
-	@mkdir -p $(PKG_DIR)
-	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(PKG_DIR)/$(PKG_MNLG)
+	@mkdir -p $(OUTPUT_DIR)
+	@mv $(PKG_TEMP_DIR)/$(PROJECT).zip $(OUTPUT_DIR)/$(PKG_MNLG)
 	@$(RM) $(PKG_TEMP_DIR)
 	@echo Done
 	@echo
