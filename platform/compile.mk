@@ -245,7 +245,7 @@ clean:
 package_prlg:
 	@echo Packaging: $(PKG_PRLG)
 	@echo In: $(OUTPUT_DIR)
-	@makemkdir -p $(PROJECT)
+	@mkdir -p $(PROJECT)
 	@cp -a $(MANIFEST) $(PROJECT)/
 	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PROJECT)/$(PAYLOAD)
 	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PROJECT)
