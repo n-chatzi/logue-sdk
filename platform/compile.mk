@@ -65,11 +65,11 @@ RM = rm -rf
 #########################################
 # Architecture specifc section
 
-ifeq ($(TYPE),modfx delfx revfx)
 DARCH = -DSTM32F446xE
 LD_DIR = $(PLATFORM_DIR)/ld/446
 SYMBOLS = $(LD_DIR)/main_api.syms
-else
+
+ifeq ($(TYPE),osc)
 DARCH = -DSTM32F401xC
 LD_DIR = $(PLATFORM_DIR)/ld/401
 SYMBOLS = $(LD_DIR)/osc_api.syms
