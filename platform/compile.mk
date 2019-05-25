@@ -37,7 +37,7 @@ endif
 endif
 
 # #############################################################################
-# configure cross compilation
+# configure cross compilation 
 # #############################################################################
 
 MCU = cortex-m4
@@ -47,41 +47,51 @@ GCC_BIN_PATH = $(TOOLS_DIR)/gcc/gcc-arm-none-eabi-5_4-2016q3/bin
 
 CROSS_COMPILE = $(GCC_BIN_PATH)/$(GCC_TARGET)
 
-CC   = $(CROSS_COMPILE)gcc
-CXXC = $(CROSS_COMPILE)g++
-LD   = $(CROSS_COMPILE)gcc
-#LD  = $(CROSS_COMPILE)g++
-CP   = $(CROSS_COMPILE)objcopy
-AS   = $(CROSS_COMPILE)gcc -x assembler-with-cpp
-AR   = $(CROSS_COMPILE)ar
-OD   = $(CROSS_COMPILE)objdump
-SZ   = $(CROSS_COMPILE)size
+# #############################################################################
+# setup commands
+# #############################################################################
+# Don't display the command when run
+Q = @
+SAY = $(Q)echo
+MKDIR = $(Q)mkdir -p
+# CP = $(Q)cp -a
 
-HEX  = $(CP) -O ihex
-BIN  = $(CP) -O binary
+CC   = $(Q)$(CROSS_COMPILE)gcc
+CXXC = $(Q)$(CROSS_COMPILE)g++
+LD   = $(Q)$(CROSS_COMPILE)gcc
+#LD  = $(Q)$(CROSS_COMPILE)g++
+CP   = $(Q)$(CROSS_COMPILE)objcopy
+AS   = $(Q)$(CROSS_COMPILE)gcc -x assembler-with-cpp
+AR   = $(Q)$(CROSS_COMPILE)ar
+OD   = $(Q)$(CROSS_COMPILE)objdump
+SZ   = $(Q)$(CROSS_COMPILE)size
 
-RM = rm -rf
+HEX  = $(Q)$(CP) -O ihex
+BIN  = $(Q)$(CP) -O binary
+MV = $(Q)mv
+RM = $(Q)rm -rf
 
 #########################################
 # Architecture specifc section
-
-DARCH = -DSTM32F446xE
-LD_DIR = $(PLATFORM_DIR)/ld/446
-SYMBOLS = $(LD_DIR)/main_api.syms
 
 ifeq ($(TYPE),osc)
 DARCH = -DSTM32F401xC
 LD_DIR = $(PLATFORM_DIR)/ld/401
 SYMBOLS = $(LD_DIR)/osc_api.syms
+else
+DARCH = -DSTM32F446xE
+LD_DIR = $(PLATFORM_DIR)/ld/446
+SYMBOLS = $(LD_DIR)/main_api.syms
 endif
 
 LDSCRIPT = $(LD_DIR)/user$(TYPE).ld
 UNIT = $(TPL_DIR)/_u$(TYPE)_unit.c
 
-RULESPATH = $(LD_DIR)
-
+# Assembler Defines
 DADEFS = $(DARCH) -DCORTEX_USE_FPU=TRUE -DARM_MATH_CM4
-DDEFS = $(DARCH) -DCORTEX_USE_FPU=TRUE -DARM_MATH_CM4 -D__FPU_PRESENT
+
+# CXX Defines
+DDEFS = $(DADEFS) -D__FPU_PRESENT
 
 DLIBS = -lm
 
@@ -163,7 +173,7 @@ ASFLAGS   = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.s=.lst)) $(
 ASXFLAGS  = $(MCFLAGS) -g $(TOPT) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.S=.lst)) $(ADEFS)
 CFLAGS    = $(MCFLAGS) $(TOPT) $(OPT) $(COPT) $(CWARN) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.c=.lst)) $(DEFS)
 CXXFLAGS  = $(MCFLAGS) $(TOPT) $(OPT) $(CXXOPT) $(CXXWARN) -Wa,-alms=$(LST_DIR)/$(notdir $(<:.cpp=.lst)) $(DEFS)
-LDFLAGS   = $(MCFLAGS) $(TOPT) $(OPT) -nostartfiles $(LIB_DIR) -Wl,-Map=$(BUILD_DIR)/$(PROJECT).map,--cref,--no-warn-mismatch,--library-path=$(RULESPATH),--script=$(LDSCRIPT) $(LDOPT)
+LDFLAGS   = $(MCFLAGS) $(TOPT) $(OPT) -nostartfiles $(LIB_DIR) -Wl,-Map=$(BUILD_DIR)/$(PROJECT).map,--cref,--no-warn-mismatch,--library-path=$(LD_DIR),--script=$(LDSCRIPT) $(LDOPT)
 
 OUTFILES := $(BUILD_DIR)/$(PROJECT).elf \
 	        $(BUILD_DIR)/$(PROJECT).hex \
@@ -184,84 +194,84 @@ POST_ALL: package_prlg package_mnlg
 $(OBJS): | $(BUILD_DIR) $(OBJ_DIR) $(LST_DIR)
 
 $(BUILD_DIR):
-	@echo Compiler Options
-	@echo $(CC) -c $(CFLAGS) -I. $(INC_DIR)
-	@echo
-	@mkdir -p $(BUILD_DIR)
+	$(SAY) Compiler Options
+	$(SAY) $(CC) -c $(CFLAGS) -I. $(INC_DIR)
+	$(SAY)
+	$(MKDIR) $(BUILD_DIR)
 
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+	$(MKDIR) $(OBJ_DIR)
 
 $(LST_DIR):
-	@mkdir -p $(LST_DIR)
+	$(MKDIR) $(LST_DIR)
 
 $(ASMOBJS) : $(OBJ_DIR)/%.o : %.s Makefile
-	@echo Assembling $(<F)
-	@$(AS) -c $(ASFLAGS) -I. $(INC_DIR) $< -o $@
+	$(SAY) Assembling $(<F)
+	$(AS) -c $(ASFLAGS) -I. $(INC_DIR) $< -o $@
 
 $(ASMXOBJS) : $(OBJ_DIR)/%.o : %.S Makefile
-	@echo Assembling $(<F)
-	@$(CC) -c $(ASXFLAGS) -I. $(INC_DIR) $< -o $@
+	$(SAY) Assembling $(<F)
+	$(CC) -c $(ASXFLAGS) -I. $(INC_DIR) $< -o $@
 
 $(COBJS) : $(OBJ_DIR)/%.o : %.c Makefile
-	@echo Compiling $(<F)
-	@$(CC) -c $(CFLAGS) -I. $(INC_DIR) $< -o $@
+	$(SAY) Compiling $(<F)
+	$(CC) -c $(CFLAGS) -I. $(INC_DIR) $< -o $@
 
 $(CXXOBJS) : $(OBJ_DIR)/%.o : %.cpp Makefile
-	@echo Compiling $(<F)
-	@$(CXXC) -c $(CXXFLAGS) -I. $(INC_DIR) $< -o $@
+	$(SAY) Compiling $(<F)
+	$(CXXC) -c $(CXXFLAGS) -I. $(INC_DIR) $< -o $@
 
 $(BUILD_DIR)/%.elf: $(OBJS) $(LDSCRIPT)
-	@echo Linking $@
-	@$(LD) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
+	$(SAY) Linking $@
+	$(LD) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 
 %.hex: %.elf
-	@echo Creating $@
-	@$(HEX) $< $@
+	$(SAY) Creating $@
+	$(HEX) $< $@
 
 %.bin: %.elf
-	@echo Creating $@
-	@$(BIN) $< $@
+	$(SAY) Creating $@
+	$(BIN) $< $@
 
 %.dmp: %.elf
-	@echo Creating $@
-	@$(OD) $(ODFLAGS) $< > $@
-	@echo
-	@$(SZ) $<
-	@echo
+	$(SAY) Creating $@
+	$(OD) $(ODFLAGS) $< > $@
+	$(SAY)
+	$(SZ) $<
+	$(SAY)
 
 %.list: %.elf
-	@echo Creating $@
-	@$(OD) -S $< > $@
+	$(SAY) Creating $@
+	$(OD) -S $< > $@
 
 clean:
-	@echo Cleaning $(PROJECT)
+	$(SAY) Cleaning $(PROJECT)
 	$(RM) .dep $(BUILD_DIR) 
 	$(RM) $(OUTPUT_DIR)/$(PKG_PRLG) 
 	$(RM) $(OUTPUT_DIR)/$(PKG_MNLG)
-	@echo Done
-	@echo
+	$(SAY) Done
+	$(SAY)
 
 package_prlg:
-	@echo Packaging: $(PKG_PRLG)
-	@echo In: $(OUTPUT_DIR)
-	@mkdir -p $(PROJECT)
+	$(SAY) Packaging: $(PKG_PRLG)
+	$(SAY) In: $(OUTPUT_DIR)
+	$(MKDIR) $(PROJECT)
 	@cp -a $(MANIFEST) $(PROJECT)/
 	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PROJECT)/$(PAYLOAD)
-	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PROJECT)
-	@mkdir -p $(OUTPUT_DIR)
-	@mv $(PROJECT).zip $(OUTPUT_DIR)/$(PKG_PRLG)
-	@echo Done
-	@echo
+	$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PROJECT)
+	$(MKDIR) $(OUTPUT_DIR)
+	$(MV) $(PROJECT).zip $(OUTPUT_DIR)/$(PKG_PRLG)
+	$(SAY) Done
+	$(SAY)
 
 package_mnlg:
-	@echo Packaging: $(PKG_MNLG)
-	@echo In: $(OUTPUT_DIR)
-	@mkdir -p $(PROJECT)
+	$(SAY) Packaging: $(PKG_MNLG)
+	$(SAY) In: $(OUTPUT_DIR)
+	$(MKDIR) $(PROJECT)
 	@cp -a $(MANIFEST) $(PROJECT)/
 	@cp -a $(BUILD_DIR)/$(PROJECT).bin $(PROJECT)/$(PAYLOAD)
-	@$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PROJECT)
-	@mkdir -p $(OUTPUT_DIR)
-	@mv $(PROJECT).zip $(OUTPUT_DIR)/$(PKG_MNLG)
-	@echo Done
-	@echo
+	$(ZIP) $(ZIP_ARGS) $(PROJECT).zip $(PROJECT)
+	$(MKDIR) $(OUTPUT_DIR)
+	$(MV) $(PROJECT).zip $(OUTPUT_DIR)/$(PKG_MNLG)
+	$(SAY) Done
+	$(SAY)
