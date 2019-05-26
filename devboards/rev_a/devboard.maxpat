@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 279.0, 343.0, 803.0, 402.0 ],
+		"rect" : [ 77.0, 614.0, 803.0, 402.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -44,7 +44,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 839.5, 38.0, 74.0, 33.0 ],
+					"patching_rect" : [ 721.5, 731.0, 74.0, 33.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 719.933349000000135, 55.75, 82.066650999999865, 20.0 ],
 					"style" : "default",
@@ -745,12 +745,12 @@
 					"presentation_rect" : [ 190.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param6",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param6",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param6",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param6"
 						}
 
 					}
@@ -792,12 +792,12 @@
 					"presentation_rect" : [ 143.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param5",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param5",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param5",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param5"
 						}
 
 					}
@@ -839,12 +839,12 @@
 					"presentation_rect" : [ 96.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param4",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param4",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param4",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param4"
 						}
 
 					}
@@ -886,12 +886,12 @@
 					"presentation_rect" : [ 190.0, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param3",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param3",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param3",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param3"
 						}
 
 					}
@@ -933,12 +933,12 @@
 					"presentation_rect" : [ 143.0, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param2",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param2",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param2",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param2"
 						}
 
 					}
@@ -980,12 +980,12 @@
 					"presentation_rect" : [ 96.0, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "param1",
-							"parameter_mmax" : 100.0,
-							"parameter_shortname" : "param1",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "param1",
+							"parameter_mmax" : 100.0,
+							"parameter_shortname" : "param1"
 						}
 
 					}
@@ -1993,10 +1993,10 @@
 					"presentation_rect" : [ 2.0, 239.875, 63.0, 149.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "portamento",
-							"parameter_shortname" : "portamento",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "portamento",
+							"parameter_shortname" : "portamento"
 						}
 
 					}
@@ -6527,13 +6527,13 @@
 					"presentation_rect" : [ 30.199951000000056, 168.25, 56.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "tempo",
-							"parameter_mmax" : 220.0,
-							"parameter_shortname" : "tempo",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 9,
 							"parameter_units" : "bpm",
-							"parameter_mmin" : 60.0
+							"parameter_mmin" : 60.0,
+							"parameter_longname" : "tempo",
+							"parameter_mmax" : 220.0,
+							"parameter_shortname" : "tempo"
 						}
 
 					}
@@ -7772,13 +7772,13 @@
 					"presentation_rect" : [ 593.000121999999919, 36.375, 47.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "cutoff", "shape", "pitch" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "lfo target",
 							"parameter_mmax" : 2,
 							"parameter_steps" : 3,
-							"parameter_shortname" : "target",
-							"parameter_enum" : [ "cutoff", "shape", "pitch" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "target"
 						}
 
 					}
@@ -7809,10 +7809,10 @@
 					"presentation_rect" : [ 554.366821000000073, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "lfo int",
-							"parameter_shortname" : "lfo_int",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "lfo int",
+							"parameter_shortname" : "lfo_int"
 						}
 
 					}
@@ -7843,10 +7843,10 @@
 					"presentation_rect" : [ 554.366821000000073, 36.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "lfo rate",
-							"parameter_shortname" : "rate",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "lfo rate",
+							"parameter_shortname" : "rate"
 						}
 
 					}
@@ -7877,13 +7877,13 @@
 					"presentation_rect" : [ 509.950012000000015, 92.375, 47.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "bpm", "slow", "fast" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "lfo mode",
 							"parameter_mmax" : 2,
 							"parameter_steps" : 3,
-							"parameter_shortname" : "mode",
-							"parameter_enum" : [ "bpm", "slow", "fast" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "mode"
 						}
 
 					}
@@ -7914,13 +7914,13 @@
 					"presentation_rect" : [ 509.950012000000015, 36.375, 48.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "square", "triangle", "saw" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "lfo wave",
 							"parameter_mmax" : 2,
 							"parameter_steps" : 3,
-							"parameter_shortname" : "wave",
-							"parameter_enum" : [ "square", "triangle", "saw" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "wave"
 						}
 
 					}
@@ -7999,10 +7999,10 @@
 					"presentation_rect" : [ 461.133422999999993, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "eg release",
-							"parameter_shortname" : "release",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "eg release",
+							"parameter_shortname" : "release"
 						}
 
 					}
@@ -8033,10 +8033,10 @@
 					"presentation_rect" : [ 461.133422999999993, 36.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "eg sustain",
-							"parameter_shortname" : "sustain",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "eg sustain",
+							"parameter_shortname" : "sustain"
 						}
 
 					}
@@ -8067,10 +8067,10 @@
 					"presentation_rect" : [ 414.700072999999975, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "eg decay",
-							"parameter_shortname" : "decay",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "eg decay",
+							"parameter_shortname" : "decay"
 						}
 
 					}
@@ -8101,10 +8101,10 @@
 					"presentation_rect" : [ 414.700072999999975, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "eg attack",
-							"parameter_shortname" : "attack",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "eg attack",
+							"parameter_shortname" : "attack"
 						}
 
 					}
@@ -8178,13 +8178,13 @@
 					"presentation_rect" : [ 69.0, 239.875, 36.0, 149.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_type" : 1,
+							"parameter_unitstyle" : 0,
+							"parameter_mmin" : 1.0,
 							"parameter_longname" : "octave",
 							"parameter_mmax" : 6.0,
 							"parameter_steps" : 6,
-							"parameter_shortname" : "octave",
-							"parameter_type" : 1,
-							"parameter_unitstyle" : 0,
-							"parameter_mmin" : 1.0
+							"parameter_shortname" : "octave"
 						}
 
 					}
@@ -8232,10 +8232,10 @@
 					"presentation_rect" : [ 367.566772000000014, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "sendfx depth",
-							"parameter_shortname" : "depth",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "sendfx depth",
+							"parameter_shortname" : "depth"
 						}
 
 					}
@@ -8266,10 +8266,10 @@
 					"presentation_rect" : [ 367.566772000000014, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "sendfx time",
-							"parameter_shortname" : "time",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "sendfx time",
+							"parameter_shortname" : "time"
 						}
 
 					}
@@ -8299,13 +8299,13 @@
 					"presentation_rect" : [ 325.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_type" : 1,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "sendfx subtype",
 							"parameter_mmax" : 19.0,
 							"parameter_steps" : 16,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "subtype",
-							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "subtype"
 						}
 
 					}
@@ -8335,14 +8335,14 @@
 					"presentation_rect" : [ 323.5, 36.25, 48.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "off", "delay", "reverb" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "sendfx type",
 							"parameter_mmax" : 2,
 							"parameter_steps" : 3,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "type",
-							"parameter_enum" : [ "off", "delay", "reverb" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "type"
 						}
 
 					}
@@ -8373,10 +8373,10 @@
 					"presentation_rect" : [ 279.300110000000018, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "modfx depth",
-							"parameter_shortname" : "depth",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "modfx depth",
+							"parameter_shortname" : "depth"
 						}
 
 					}
@@ -8407,10 +8407,10 @@
 					"presentation_rect" : [ 279.300110000000018, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "modfx speed",
-							"parameter_shortname" : "speed",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "modfx speed",
+							"parameter_shortname" : "speed"
 						}
 
 					}
@@ -8440,13 +8440,13 @@
 					"presentation_rect" : [ 236.5, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_type" : 1,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "modfx subtype",
 							"parameter_mmax" : 15.0,
 							"parameter_steps" : 16,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "subtype",
-							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "subtype"
 						}
 
 					}
@@ -8476,14 +8476,14 @@
 					"presentation_rect" : [ 235.0, 36.25, 48.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "off", "chorus", "ensemble", "phaser", "flanger", "user" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "modfx type",
 							"parameter_mmax" : 5,
 							"parameter_steps" : 6,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "type",
-							"parameter_enum" : [ "off", "chorus", "ensemble", "phaser", "flanger", "user" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "type"
 						}
 
 					}
@@ -8609,11 +8609,11 @@
 					"presentation_rect" : [ 49.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "multi shift shape",
-							"parameter_shortname" : "s+shape",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_linknames" : 1
+							"parameter_linknames" : 1,
+							"parameter_longname" : "multi shift shape",
+							"parameter_shortname" : "s+shape"
 						}
 
 					}
@@ -8644,10 +8644,10 @@
 					"presentation_rect" : [ 49.0, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "multi shape",
-							"parameter_shortname" : "shape",
 							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_unitstyle" : 0,
+							"parameter_longname" : "multi shape",
+							"parameter_shortname" : "shape"
 						}
 
 					}
@@ -8677,13 +8677,13 @@
 					"presentation_rect" : [ 2.0, 92.375, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_type" : 1,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "multi select",
 							"parameter_mmax" : 15.0,
 							"parameter_steps" : 16,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "select",
-							"parameter_type" : 1,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "select"
 						}
 
 					}
@@ -8713,14 +8713,14 @@
 					"presentation_rect" : [ 2.0, 36.25, 45.0, 50.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_enum" : [ "noise", "vpm", "user" ],
+							"parameter_type" : 2,
+							"parameter_unitstyle" : 0,
 							"parameter_longname" : "multi type",
 							"parameter_mmax" : 2,
 							"parameter_steps" : 3,
 							"parameter_initial" : [ 0.0 ],
-							"parameter_shortname" : "type",
-							"parameter_enum" : [ "noise", "vpm", "user" ],
-							"parameter_type" : 2,
-							"parameter_unitstyle" : 0
+							"parameter_shortname" : "type"
 						}
 
 					}
@@ -9342,7 +9342,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-124", 0 ],
-					"order" : 1,
 					"source" : [ "obj-21", 0 ]
 				}
 
@@ -9350,24 +9349,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-128", 0 ],
-					"order" : 1,
 					"source" : [ "obj-21", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-140", 1 ],
-					"order" : 0,
-					"source" : [ "obj-21", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-140", 0 ],
-					"order" : 0,
-					"source" : [ "obj-21", 0 ]
 				}
 
 			}
@@ -9991,36 +9973,36 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-6" : [ "multi shift shape", "s+shape", 0 ],
-			"obj-92" : [ "eg attack", "attack", 0 ],
-			"obj-102" : [ "lfo target", "target", 0 ],
-			"obj-87" : [ "octave", "octave", 0 ],
-			"obj-57" : [ "param2", "param2", 0 ],
-			"obj-139" : [ "param5", "param5", 0 ],
+			"obj-136" : [ "param6", "param6", 0 ],
+			"obj-173" : [ "tempo", "tempo", 0 ],
+			"obj-34" : [ "portamento", "portamento", 0 ],
 			"obj-16" : [ "sendfx type", "type", 0 ],
+			"obj-67" : [ "param4", "param4", 0 ],
 			"obj-7" : [ "modfx depth", "depth", 0 ],
 			"obj-4" : [ "multi shape", "shape", 0 ],
-			"obj-173" : [ "tempo", "tempo", 0 ],
 			"obj-5" : [ "modfx speed", "speed", 0 ],
-			"obj-1" : [ "modfx subtype", "subtype", 0 ],
-			"obj-27" : [ "modfx type", "type", 0 ],
-			"obj-34" : [ "portamento", "portamento", 0 ],
 			"obj-3" : [ "multi select", "select", 0 ],
+			"obj-1" : [ "modfx subtype", "subtype", 0 ],
+			"obj-2" : [ "multi type", "type", 0 ],
+			"obj-139" : [ "param5", "param5", 0 ],
+			"obj-27" : [ "modfx type", "type", 0 ],
+			"obj-57" : [ "param2", "param2", 0 ],
 			"obj-95" : [ "eg release", "release", 0 ],
 			"obj-96" : [ "lfo int", "lfo_int", 0 ],
-			"obj-2" : [ "multi type", "type", 0 ],
-			"obj-132" : [ "param3", "param3", 0 ],
 			"obj-94" : [ "eg sustain", "sustain", 0 ],
 			"obj-97" : [ "lfo rate", "rate", 0 ],
 			"obj-93" : [ "eg decay", "decay", 0 ],
 			"obj-8" : [ "sendfx depth", "depth", 0 ],
-			"obj-10" : [ "param1", "param1", 0 ],
 			"obj-13" : [ "sendfx time", "time", 0 ],
+			"obj-87" : [ "octave", "octave", 0 ],
 			"obj-15" : [ "sendfx subtype", "subtype", 0 ],
+			"obj-132" : [ "param3", "param3", 0 ],
 			"obj-99" : [ "lfo wave", "wave", 0 ],
-			"obj-136" : [ "param6", "param6", 0 ],
-			"obj-67" : [ "param4", "param4", 0 ],
 			"obj-98" : [ "lfo mode", "mode", 0 ],
+			"obj-10" : [ "param1", "param1", 0 ],
+			"obj-6" : [ "multi shift shape", "s+shape", 0 ],
+			"obj-92" : [ "eg attack", "attack", 0 ],
+			"obj-102" : [ "lfo target", "target", 0 ],
 			"parameterbanks" : 			{
 
 			}
